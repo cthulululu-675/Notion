@@ -39,7 +39,7 @@ h1 {
 .card {
     padding: 10px 25px 10px 25px;
     border-radius: 10px;
-    background: #553c4e;
+    background: #ADEBB3;
     width: 85vw;
     color: #fff;
     display: inline-block;
@@ -53,7 +53,7 @@ h1 {
 
 .clock {
     display: inline;
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Sour Gummy', cursive;
     font-size: 2em;
    
 }
@@ -71,14 +71,14 @@ h1 {
 .date {
     display: inline;
     min-width: 162px;
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Sour Gummy', cursive;
     font-size: 2em;
     padding-right: 30px;
 }
 .greet{
     
     display:inline;
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Sour Gummy', cursive;
     font-size: 2rem;
      padding-right: 30px;
 }
@@ -98,9 +98,7 @@ h1 {
         <div class="time" id="hour"></div>
         <div class="colon">:</div>
         <div class="time" id="min"></div>
-        <div class="colon">:</div>
-        <div class="time" id="sec"></div>
-      </div>
+              </div>
     </div>
     
   </div>
@@ -117,13 +115,7 @@ function clock() {
 var today = new Date();
 var hour = zeros(twelveHour(today.getHours()));
 var minutes = zeros(today.getMinutes());
-var seconds = zeros(today.getSeconds());
-if(today.getHours() >=12){
-    seconds+=" pm"
-}
-else{
-    seconds+=" am"
-}
+
 hrs = today.getHours();
 if (hrs < 12)
         greet = 'Good Morning  ';
