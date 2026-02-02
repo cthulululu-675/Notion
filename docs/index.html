@@ -1,160 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">  
+<html lang="en">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>greeting2</title>
+    <title>Live Greeting Clock</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <style>
+        /* RESET */
+        body {
+            margin: 0;
+            background-color: #fff;
+            line-height: 1.6;
+            font-family: 'Sour Gummy', cursive;
+        }
 
-        /*CSS RESETS*/
+        h1 { margin-top: 0; }
 
-body{
-    background-color: #fff;
-    line-height: 1.6;
+        /* FULL SCREEN CENTERING */
+        .full-table {
+            display: table;
+            height: 100vh;
+            width: 100%;
+        }
+        .table-cell {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
 
-}
+        /* CARD */
+        .card {
+            padding: 10px 25px;
+            border-radius: 10px;
+            background: #ADEBB3;
+            width: 85vw;
+            color: #fff;
+            display: inline-block;
+            box-shadow: 2px 2px 1px 0px #330835;
+        }
 
-h1 {
-    margin-top: 0;
-}
+        .card:hover {
+            margin-top: 2px;
+            box-shadow: none;
+        }
 
+        /* GREETING AND DATE */
+        .greet {
+            font-family: 'Sour Gummy', cursive;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
 
-/*CSS START*/
+        .date {
+            font-family: 'Sour Gummy', cursive;
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: block;
+        }
 
-.full-table {
-    display: table;
-    height: 100%;
-    width: 100%;
-}
+        /* CLOCK */
+        .clock {
+            display: inline;
+            font-family: 'Sour Gummy', cursive;
+            font-size: 2em;
+        }
 
-.table-cell {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-}
+        .time {
+            display: inline;
+            min-width: 30px;
+        }
 
-.card {
-    padding: 10px 25px 10px 25px;
-    border-radius: 10px;
-    background: #ADEBB3;
-    width: 85vw;
-    color: #fff;
-    display: inline-block;
-    box-shadow: 2px 2px 1px 0px #330835;
-}
-
-.card:hover {
-    margin-top: 2px;
-    box-shadow: none;
-}
-
-.clock {
-    display: inline;
-    font-family: 'Sour Gummy', cursive;
-    font-size: 2em;
-   
-}
-
-.time {
-    display: inline;
-    min-width: 37px;
-}
-
-.colon {
-    font-size: 1.1em;
-    display: inline-block;
-}
-
-.date {
-    display: inline;
-    min-width: 162px;
-    font-family: 'Sour Gummy', cursive;
-    font-size: 2em;
-    padding-right: 30px;
-}
-.greet{
-    
-    display:inline;
-    font-family: 'Sour Gummy', cursive;
-    font-size: 2rem;
-     padding-right: 30px;
-}
-
+        .colon {
+            display: inline-block;
+            font-size: 1.1em;
+        }
     </style>
 </head>
 <body>
-    <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto:400,700" rel="stylesheet">
 
 <div class="full-table">
-  <div class="table-cell">
-    
-    <div class="card">
-        <div class="greet" id="greet"></div>
-      <div class="date" id="date"></div>
-      <div class="clock">
-        <div class="time" id="hour"></div>
-        <div class="colon">:</div>
-        <div class="time" id="min"></div>
-              </div>
+    <div class="table-cell">
+        <div class="card">
+            <div class="greet" id="greet"></div>
+            <div class="date" id="date"></div>
+            <div class="clock">
+                <span class="time" id="hour"></span><span class="colon">:</span>
+                <span class="time" id="min"></span><span class="colon">:</span>
+                <span class="time" id="sec"></span>
+            </div>
+        </div>
     </div>
-    
-  </div>
 </div>
 
 <script>
-    function date() {
-var today = new Date();
-document.getElementById('date').innerHTML = today.toDateString();
-}
+    function updateDateTime() {
+        const now = new Date();
 
+        // Greeting
+        const hour24 = now.getHours();
+        let greet = '';
+        if(hour24 < 12) greet = 'Good Morning';
+        else if(hour24 < 18) greet = 'Good Afternoon';
+        else greet = 'Good Evening';
+        document.getElementById('greet').innerText = greet;
 
-function clock() {
-var today = new Date();
-var hour = zeros(twelveHour(today.getHours()));
-var minutes = zeros(today.getMinutes());
+        // Date
+        document.getElementById('date').innerText = now.toDateString();
 
-hrs = today.getHours();
-if (hrs < 12)
-        greet = 'Good Morning  ';
-    else if (hrs >= 12 && hrs <= 17)
-        greet = 'Good Afternoon ';
-    else if (hrs >= 17 && hrs <= 24)
-        greet = 'Good Evening  ';
-// console.log(today.toLocaleTimeString());
-document.getElementById('greet').innerHTML = greet;
-document.getElementById('hour').innerHTML = hour;
-document.getElementById('min').innerHTML = minutes;
-}
+        // Time
+        const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const ampm = hour24 >= 12 ? 'PM' : 'AM';
 
-function twelveHour(hour) {
-if (hour > 12) {
-    return hour -= 12 
-} else if (hour === 0) {
-    return hour = 12;
-} else {
-    return hour
-}
-}
-    
-// adds zero infront of single digit number
-function zeros(num) {
-if (num < 10) {
-    num = '0' + num
-};
-return num;
-}
+        document.getElementById('hour').innerText = hour12;
+        document.getElementById('min').innerText = minutes;
+        document.getElementById('sec').innerText = seconds + ' ' + ampm;
 
-function dateTime() {
-date();
-clock();
-setTimeout(dateTime, 500);
-}
+        // Update every 500ms
+        setTimeout(updateDateTime, 500);
+    }
 
-dateTime()
-// END
+    updateDateTime();
 </script>
 
 </body>
